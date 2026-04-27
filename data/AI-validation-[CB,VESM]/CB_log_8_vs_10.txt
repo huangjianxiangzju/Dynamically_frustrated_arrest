@@ -1,0 +1,57 @@
+
+============================================================
+  CB Analysis: 8_vs_10
+  State 1 : 7Z4E_8-nt_chainA_clean.pdb
+  State 2 : 7Z4K_10-nt_chainA_clean.pdb
+  Model   : proteinmpnn
+  Mode    : all
+  Target  : cuda:0
+📂 Loading structures...
+  Full scan: 1368 positions
+
+🧬 Generating single mutants...
+  25992 variants generated
+
+🔬 Scoring against State 1 (7Z4E_8-nt_chainA_clean)...
+🔬 Scoring against State 2 (7Z4K_10-nt_chainA_clean)...
+
+✓ Variant scores  → CB_results_8_vs_10_proteinmpnn/variants.csv  (25992 rows)
+✓ Position summary → CB_results_8_vs_10_proteinmpnn/position_summary.csv
+
+── Top 15 State-2-biased MD positions (Positive CB_bias) ──
+ position wt  mean_CB_bias                            MD_Roles
+     1030  G      0.019357                   Allosteric_Switch
+      175  N      0.018473                            GCCM_Hub
+     1032  A      0.018097                   Allosteric_Switch
+      914  A      0.017352                     Hydrophobic_Hub
+      298  D      0.017211                            GCCM_Hub
+     1004  L      0.016963 Allosteric_Switch | Hydrophobic_Hub
+      712  Q      0.016541                   Allosteric_Switch
+     1118  K      0.016284                      SaltBridge_Hub
+      765  R      0.016251                      SaltBridge_Hub
+      168  F      0.016233                            GCCM_Hub
+      769  T      0.016050                   Allosteric_Switch
+     1003  K      0.016008                   Allosteric_Switch
+     1058  R      0.015763                   Allosteric_Switch
+      304  D      0.015697                   Allosteric_Switch
+      305  I      0.015685                   Allosteric_Switch
+
+── Top 15 State-1-biased MD positions (Negative CB_bias) ──
+ position wt  mean_CB_bias                            MD_Roles
+      256  F      0.005804 Allosteric_Switch | Hydrophobic_Hub
+      773  G      0.008125                   Allosteric_Switch
+     1037  F      0.008658 Allosteric_Switch | Hydrophobic_Hub
+      922  V      0.009268                   Allosteric_Switch
+     1031  K      0.009450                   Allosteric_Switch
+      450  Y      0.009603    Hydrophobic_Hub | Centrality_Hub
+      204  S      0.009958                            GCCM_Hub
+      408  G      0.010291                            GCCM_Hub
+      846  F      0.010374                     Hydrophobic_Hub
+      783  R      0.010529                      SaltBridge_Hub
+      794  Q      0.010587                      Centrality_Hub
+      274  D      0.010600                      SaltBridge_Hub
+     1017  D      0.010604                   Allosteric_Switch
+       23  D      0.010663                   Allosteric_Switch
+     1042  I      0.010766                     Hydrophobic_Hub
+
+🎉 Done.

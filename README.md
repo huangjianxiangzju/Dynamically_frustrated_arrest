@@ -1,0 +1,158 @@
+# [Paper Title]
+
+> **Status:** Manuscript in preparation  
+> **Authors:** [Author names]  
+> **Correspondence:** [Contact email]
+
+## Overview
+
+This repository contains all processed data, raw analysis outputs, analysis scripts, and generated figures for the manuscript **"[Paper Title]"**.
+
+The study investigates the conformational dynamics and allosteric signalling mechanisms of **SpCas9** during R-loop progression using all-atom molecular dynamics (MD) simulations across seven discrete R-loop states (6-nt through 18-nt). A key theme is the existence of dynamically frustrated "checkpoint" states that gate catalytic activation of the HNH domain. The analysis integrates:
+
+- **RMSF-based domain flexibility profiling** across seven R-loop states
+- **Secondary structure shift analysis** to identify residues that act as allosteric switches
+- **Competitive interaction networks** (salt bridges, hydrophobic contacts) tracking inter-domain communication
+- **Generalised Correlation Contact Map (GCCM) network analysis** for allosteric information-flow pathways
+- **AI-based validation** using ProteinMPNN (CB scores) and a VESM evolutionary language model, cross-referenced against published deep mutational scanning (DMS) data
+
+---
+
+## Repository Structure
+
+```
+.
+├── README.md                          # This file
+├── data/                              # Processed / analysis-ready data files
+│   ├── RMSF/                          # Per-residue RMSF summary (mean ± SD, per state, 5 replicas)
+│   ├── Secondary_Structure_Shift/     # Ordered-fraction per residue + classified allosteric switches
+│   ├── Interaction_Network/           # Constitutive, clustered, and dynamic-hub interaction tables
+│   ├── GCCM_network/                  # Processed GCCM graphs (.pkl), community summary, centrality tables
+│   └── AI-validation-[CB,VESM]/       # CB logs, ProteinMPNN results, VESM scores, DMS reference,
+│       │                              #   discordance tables, and directionality tables
+│       ├── CB_VESM_discordance/       # CB × VESM × DMS merged tables
+│       └── CB_directionality/         # CB state-bias and enrichment tables
+├── raw_data/                          # Raw computation outputs (direct from MD tools)
+│   ├── RMSF/                          # Per-replica rmsf.xvg files (GROMACS output)
+│   ├── Interaction_Network/           # Per-state competitive_salt_bridges / hydrophobic CSVs
+│   ├── GCCM_Network/                  # Raw GCCM matrices (gccm_full.dat) per state
+│   └── Global_Secondary_Structure/    # Raw per-residue secondary structure fractions
+├── scripts/                           # All analysis and figure-generation scripts
+│   ├── Figure2/                       # PCA porcupine-plot (conformational transition vectors)
+│   ├── Figure3/                       # Domain-level RMSF dynamics
+│   ├── Figure4/                       # Global secondary structure heatmap & allosteric switches
+│   ├── Figure5/                       # Allosteric interaction network pipeline
+│   ├── Figure6/                       # GCCM network: centrality, community, path impedance
+│   ├── Figure7/                       # CB vs VESM discordance analysis
+│   └── supplementary/                 # Supplementary figure scripts & AI validation pipeline
+│       └── AI-dms-validation/
+│           ├── VESM-CB/               # PDB cleaning, VESM scoring, CB scoring pipeline
+│           ├── plot_CB_state_bias_2rows.py
+│           └── plot_integrated_rank.py
+└── figures/                           # Publication-quality output figures (PNG, 600 dpi)
+    ├── Figure3/
+    ├── Figure4/
+    ├── Figure5/
+    ├── Figure6/
+    └── supplenmentary/
+```
+
+---
+
+## System: SpCas9 R-loop States
+
+Seven R-loop intermediate states were simulated, distinguished by the RNA–DNA heteroduplex length:
+
+| State  | PDB (RCSB) | R-loop length |
+|--------|------------|---------------|
+| 6-nt   | 7Z4C       | 6 nt          |
+| 8-nt   | 7Z4E       | 8 nt          |
+| 10-nt  | 7Z4K       | 10 nt         |
+| 12-nt  | 7Z4G       | 12 nt         |
+| 14-nt  | 7Z4H       | 14 nt         |
+| 16-nt  | 7Z4I       | 16 nt         |
+| 18-nt  | 7Z4L        | 18 nt                    |
+
+Each state was simulated with **5 independent replicas**. Protein domain boundaries follow the SpCas9 canonical segmentation: RuvC-I (1–59), BH (60–94), REC1-A (95–176), REC2 (177–305), REC1-B (306–495), REC3 (496–717), RuvC-II (718–764), L1 (765–780), HNH (781–905), L2 (906–918), RuvC-III (919–1100), PI (1101–1368).
+
+---
+
+## Data Availability
+
+All processed and raw data supporting the figures are provided within this repository.
+
+- **Processed data** used directly by plotting scripts are in `data/`
+- **Raw computation outputs** (GROMACS `.xvg`, raw CSVs, GCCM matrices) are in `raw_data/`
+- Input PDB structures are available from the RCSB Protein Data Bank (accessions listed above)
+- MD trajectories are large binary files and are **not** included here; they are deposited at [Zenodo / Figshare — **DOI: [add DOI]**]
+
+---
+
+## Code Availability
+
+All analysis code is in `scripts/`. Each figure subdirectory contains a `README.md` describing inputs, outputs, and execution order.
+
+**General Python requirements (Python 3.10+):**
+`numpy`, `pandas`, `matplotlib`, `seaborn`, `scipy`, `networkx`, `MDAnalysis`, `mdtraj`, `scikit-learn`, `plotly`, `kaleido`, `adjustText`
+
+**To reproduce figures:**
+
+> All paths below are relative to the repository root. Scripts use bare filenames and must be run from the directory containing their input data — see each subfolder `README.md` for details.
+
+```bash
+# Figure 3 – RMSF domain dynamics
+cd data/RMSF
+python ../../scripts/Figure3/Fig_Mechanistic_Domain_Dynamics_median.py
+
+# Figure 4 – Secondary structure shifts
+cd raw_data/Global_Secondary_Structure
+python ../../scripts/Figure4/plot_ss_heatmap.py
+python ../../scripts/Figure4/classify_switches_final.py
+python ../../scripts/Figure4/plot_ss_distribution_final.py
+
+# Figure 5 – Allosteric interaction networks (reads raw_data/Interaction_Network/ via relative paths)
+cd scripts/Figure5
+python Allosteric_Interaction_Pipeline_final.py saltbridge
+python Allosteric_Interaction_Pipeline_final.py hydro
+python plot_network_series_updated.py
+
+# Figure 6 – GCCM network analysis
+cd scripts/Figure6
+python build_network.py          # requires trajectory files; skip if .pkl already present
+cd ../../data/GCCM_network
+python ../../scripts/Figure6/plot_gccm_compact.py
+python ../../scripts/Figure6/plot_community.py
+python ../../scripts/Figure6/plot_path_impedance.py
+cd gccm
+python ../../../scripts/Figure6/plot_centrality_evolution.py
+
+# Figure 7 – CB vs VESM discordance (bare relative paths — must run from AI-validation dir)
+cd data/AI-validation-[CB,VESM]
+python ../../scripts/Figure7/plot_CB_VESM_discordance.py
+
+# Supplementary – AI validation (same bare-path requirement)
+cd data/AI-validation-[CB,VESM]
+python ../../scripts/supplementary/AI-dms-validation/plot_integrated_rank.py
+python ../../scripts/supplementary/AI-dms-validation/plot_CB_state_bias_2rows.py
+
+# CB × VESM × DMS three-way validation
+cd data/AI-validation-[CB,VESM]/CB_VESM_discordance
+python ../cb_vesm_dms_triple.py
+```
+
+See each subfolder `README.md` for detailed input/output descriptions.
+
+---
+
+## Citation
+
+If you use this data or code, please cite:
+
+> [Author names]. *[Paper Title]*. [Journal], [Year]. DOI: [add DOI]
+
+---
+
+## License
+
+Code is released under the [MIT License](LICENSE).  
+Data files are released under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).

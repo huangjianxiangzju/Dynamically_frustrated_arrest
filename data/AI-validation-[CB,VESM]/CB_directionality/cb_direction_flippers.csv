@@ -1,0 +1,139 @@
+position,wt,MD_Roles,Hub_Overlap_Count,6_vs_8,8_vs_10,10_vs_12,12_vs_14,14_vs_16,16_vs_18
+9,L,Hydrophobic_Hub,1,state2_biased,state2_biased,state1_biased,,state1_biased,
+26,K,Allosteric_Switch,1,,,,state1_biased,state2_biased,
+35,L,Allosteric_Switch,1,state2_biased,state1_biased,,state1_biased,,
+55,S,Centrality_Hub,1,,,state2_biased,state1_biased,,state2_biased
+60,E,Centrality_Hub,1,,,state1_biased,,state1_biased,state2_biased
+66,R,Centrality_Hub,1,state2_biased,,state2_biased,,state1_biased,
+67,T,Centrality_Hub,1,state1_biased,,state1_biased,state2_biased,state2_biased,
+69,R,SaltBridge_Hub,1,state1_biased,state2_biased,,state1_biased,,
+70,R,Centrality_Hub,1,state1_biased,state1_biased,state1_biased,,,state2_biased
+71,R,SaltBridge_Hub | Centrality_Hub,2,state2_biased,,,,state1_biased,
+115,R,SaltBridge_Hub,1,,state2_biased,,,,state1_biased
+168,F,GCCM_Hub,1,,state2_biased,state1_biased,,,
+169,L,GCCM_Hub,1,,,state2_biased,state2_biased,state1_biased,
+170,I,GCCM_Hub,1,state2_biased,,,,,state1_biased
+174,L,GCCM_Hub,1,state1_biased,state2_biased,,state1_biased,state2_biased,
+183,K,GCCM_Hub,1,state1_biased,,,,,state2_biased
+184,L,GCCM_Hub,1,state1_biased,state1_biased,state2_biased,state1_biased,,
+186,I,GCCM_Hub,1,state1_biased,state2_biased,state1_biased,,,state1_biased
+203,A,GCCM_Hub,1,state1_biased,state2_biased,,,state2_biased,
+204,S,GCCM_Hub,1,state2_biased,state1_biased,,,,state1_biased
+206,V,GCCM_Hub,1,,state2_biased,,,state1_biased,
+220,R,SaltBridge_Hub | Centrality_Hub,2,state2_biased,,,state1_biased,,
+222,L,Centrality_Hub,1,state1_biased,,state2_biased,,,
+230,P,GCCM_Hub,1,,,,,state1_biased,state2_biased
+231,G,GCCM_Hub,1,state1_biased,state2_biased,state1_biased,,,
+237,L,Hydrophobic_Hub,1,,state1_biased,state2_biased,state2_biased,,
+244,L,GCCM_Hub,1,,,state1_biased,,,state2_biased
+252,F,Hydrophobic_Hub,1,,state1_biased,state2_biased,,,state2_biased
+253,K,SaltBridge_Hub,1,state1_biased,,,,state2_biased,state2_biased
+254,S,Allosteric_Switch,1,state1_biased,state1_biased,,,,state2_biased
+256,F,Allosteric_Switch | Hydrophobic_Hub,2,,state1_biased,state2_biased,,,state1_biased
+258,L,Hydrophobic_Hub,1,,,,,state1_biased,state2_biased
+262,A,Hydrophobic_Hub,1,state2_biased,state1_biased,state1_biased,state2_biased,state1_biased,state2_biased
+266,L,Hydrophobic_Hub,1,,state1_biased,state2_biased,,,state1_biased
+268,K,GCCM_Hub,1,state1_biased,state2_biased,,,,
+274,D,SaltBridge_Hub | Centrality_Hub,2,state2_biased,state1_biased,,,,
+282,I,Hydrophobic_Hub,1,state1_biased,state1_biased,,,,state2_biased
+290,F,Hydrophobic_Hub,1,state1_biased,,,,state1_biased,state2_biased
+295,N,GCCM_Hub,1,,,state2_biased,state1_biased,,
+296,L,GCCM_Hub,1,,,state2_biased,state1_biased,state2_biased,state2_biased
+298,D,GCCM_Hub,1,,state2_biased,state1_biased,,,state2_biased
+299,A,GCCM_Hub,1,state1_biased,state1_biased,,,state2_biased,
+305,I,Allosteric_Switch | Hydrophobic_Hub,2,state1_biased,state2_biased,,,,
+306,L,GCCM_Hub,1,state1_biased,,state2_biased,,,state2_biased
+397,D,SaltBridge_Hub,1,state1_biased,state2_biased,,,state2_biased,state1_biased
+409,S,GCCM_Hub,1,state2_biased,,state1_biased,,,
+411,P,GCCM_Hub | Hydrophobic_Hub,2,,state2_biased,state2_biased,,state2_biased,state1_biased
+414,I,Hydrophobic_Hub | Centrality_Hub,2,,state2_biased,,state1_biased,,
+447,R,Centrality_Hub,1,,state2_biased,,state2_biased,,state1_biased
+469,S,GCCM_Hub,1,state1_biased,,state2_biased,,state1_biased,
+492,I,Hydrophobic_Hub | Centrality_Hub,2,state1_biased,,state2_biased,,state2_biased,
+494,R,Allosteric_Switch,1,state2_biased,,,state2_biased,,state1_biased
+495,M,Allosteric_Switch | Hydrophobic_Hub,2,,,state2_biased,state1_biased,state1_biased,
+496,T,Centrality_Hub,1,state2_biased,,,state1_biased,,
+507,V,Centrality_Hub,1,state2_biased,state2_biased,,,,state1_biased
+531,T,Allosteric_Switch,1,state2_biased,,state2_biased,state1_biased,,
+537,P,Hydrophobic_Hub,1,state1_biased,,,,state1_biased,state2_biased
+538,A,Allosteric_Switch | Hydrophobic_Hub,2,,,state2_biased,state1_biased,,state1_biased
+596,D,Centrality_Hub,1,,state1_biased,,,state2_biased,
+625,L,Allosteric_Switch | Hydrophobic_Hub,2,state1_biased,,,state1_biased,,state2_biased
+626,F,Hydrophobic_Hub,1,state1_biased,state1_biased,,state1_biased,state2_biased,
+627,E,SaltBridge_Hub,1,,,,state1_biased,,state2_biased
+632,I,Hydrophobic_Hub,1,state2_biased,state1_biased,,,state1_biased,
+659,W,Hydrophobic_Hub,1,state2_biased,,,,,state1_biased
+708,I,Centrality_Hub,1,state2_biased,,,state1_biased,,state2_biased
+713,V,Allosteric_Switch | Centrality_Hub,2,,state2_biased,state2_biased,,,state1_biased
+715,G,Centrality_Hub,1,,,,state2_biased,state2_biased,state1_biased
+717,G,Centrality_Hub,1,,,,,state2_biased,state1_biased
+723,H,Centrality_Hub,1,,,state2_biased,state1_biased,,state1_biased
+727,L,Hydrophobic_Hub,1,,,state2_biased,state1_biased,,state2_biased
+733,I,Hydrophobic_Hub | Centrality_Hub,2,state1_biased,,,state2_biased,,
+737,I,Hydrophobic_Hub,1,state2_biased,state1_biased,,,state1_biased,
+763,M,Hydrophobic_Hub,1,state2_biased,,state2_biased,state1_biased,state1_biased,
+766,E,Centrality_Hub,1,,,state1_biased,,,state2_biased
+772,K,Allosteric_Switch | SaltBridge_Hub,2,state1_biased,,,state1_biased,,state2_biased
+773,G,Allosteric_Switch,1,,state1_biased,,state2_biased,,
+780,R,Centrality_Hub,1,state2_biased,,state1_biased,,state1_biased,state2_biased
+783,R,SaltBridge_Hub,1,,state1_biased,,state2_biased,,
+784,I,Hydrophobic_Hub,1,,state1_biased,state1_biased,state2_biased,state1_biased,state2_biased
+797,K,Centrality_Hub,1,,state2_biased,state1_biased,,,
+807,Q,Centrality_Hub,1,,state1_biased,,,state2_biased,state2_biased
+809,E,SaltBridge_Hub,1,state2_biased,state1_biased,,state1_biased,,
+817,Q,Centrality_Hub,1,,state1_biased,state1_biased,state2_biased,,state2_biased
+841,I,Centrality_Hub,1,,,state1_biased,state2_biased,,
+842,V,Hydrophobic_Hub | Centrality_Hub,2,state2_biased,state1_biased,,state2_biased,,
+846,F,Hydrophobic_Hub,1,state2_biased,state1_biased,,,state2_biased,
+849,D,SaltBridge_Hub,1,,,state1_biased,state2_biased,,
+900,L,Hydrophobic_Hub,1,,state1_biased,state1_biased,state2_biased,,
+910,E,SaltBridge_Hub,1,state2_biased,,,state1_biased,,state1_biased
+914,A,Hydrophobic_Hub,1,state2_biased,state2_biased,,,state2_biased,state1_biased
+917,I,Hydrophobic_Hub,1,,state2_biased,,,state1_biased,state2_biased
+919,R,SaltBridge_Hub,1,,,state2_biased,state1_biased,state2_biased,state1_biased
+922,V,Allosteric_Switch | Hydrophobic_Hub,2,state1_biased,state1_biased,state2_biased,,,
+923,E,SaltBridge_Hub,1,,,state1_biased,state2_biased,,
+925,R,SaltBridge_Hub | Centrality_Hub,2,state1_biased,,,,state2_biased,
+940,N,Centrality_Hub,1,state2_biased,,,,state1_biased,
+949,L,Centrality_Hub,1,,,state2_biased,state1_biased,,
+960,S,Allosteric_Switch | Centrality_Hub,2,state2_biased,state2_biased,,state2_biased,,state1_biased
+969,D,SaltBridge_Hub,1,,state1_biased,,state2_biased,,
+981,Y,Allosteric_Switch,1,,,state1_biased,state2_biased,,state1_biased
+996,A,Hydrophobic_Hub,1,state1_biased,state2_biased,,state1_biased,,
+1004,L,Allosteric_Switch | Hydrophobic_Hub,2,,state2_biased,state1_biased,state1_biased,,state1_biased
+1009,V,Hydrophobic_Hub,1,,state2_biased,state1_biased,state2_biased,,
+1013,Y,Hydrophobic_Hub,1,state1_biased,state2_biased,state1_biased,,,
+1017,D,Allosteric_Switch,1,state2_biased,state1_biased,,,,state2_biased
+1019,R,Allosteric_Switch | SaltBridge_Hub,2,state2_biased,,,state1_biased,state2_biased,
+1021,M,Allosteric_Switch | Hydrophobic_Hub,2,,state1_biased,,state2_biased,,state2_biased
+1022,I,Allosteric_Switch | Hydrophobic_Hub,2,,,state1_biased,,,state2_biased
+1025,S,Allosteric_Switch,1,,,,state2_biased,,state1_biased
+1027,Q,Allosteric_Switch,1,state1_biased,,,,,state2_biased
+1030,G,Allosteric_Switch,1,state1_biased,state2_biased,state1_biased,,,state1_biased
+1031,K,Allosteric_Switch,1,state1_biased,state1_biased,state2_biased,state1_biased,,state1_biased
+1034,A,Allosteric_Switch | Hydrophobic_Hub,2,state1_biased,state1_biased,state2_biased,,,
+1037,F,Allosteric_Switch | Hydrophobic_Hub,2,,state1_biased,,,state2_biased,
+1038,F,Allosteric_Switch | Hydrophobic_Hub,2,,,,state2_biased,state2_biased,state1_biased
+1039,Y,Allosteric_Switch | Hydrophobic_Hub,2,state2_biased,,state1_biased,state2_biased,,
+1041,N,Allosteric_Switch,1,,,,state2_biased,state2_biased,state1_biased
+1042,I,Hydrophobic_Hub,1,,state1_biased,,,state2_biased,state1_biased
+1047,K,GCCM_Hub,1,,,,,state2_biased,state1_biased
+1049,E,Allosteric_Switch,1,,state1_biased,,state2_biased,,
+1051,T,Allosteric_Switch,1,state2_biased,,,state1_biased,state2_biased,
+1057,I,Allosteric_Switch,1,,,,,state1_biased,state2_biased
+1087,L,Allosteric_Switch,1,state1_biased,,,state2_biased,state1_biased,
+1110,I,Allosteric_Switch,1,state2_biased,state2_biased,,state1_biased,,state2_biased
+1120,I,Allosteric_Switch,1,state1_biased,state2_biased,,,,
+1139,V,Centrality_Hub,1,,state1_biased,state2_biased,,,
+1150,E,Allosteric_Switch,1,,,,,state1_biased,state2_biased
+1169,M,Hydrophobic_Hub,1,state1_biased,state2_biased,,state2_biased,,
+1242,Y,Hydrophobic_Hub | Centrality_Hub,2,state2_biased,state1_biased,state1_biased,,,
+1244,K,Centrality_Hub,1,state2_biased,,,,,state1_biased
+1290,V,Hydrophobic_Hub,1,,state1_biased,state2_biased,state2_biased,state1_biased,state1_biased
+1294,Y,Hydrophobic_Hub,1,state1_biased,state1_biased,state2_biased,state1_biased,,state2_biased
+1309,I,Hydrophobic_Hub,1,state1_biased,,,state1_biased,state1_biased,state2_biased
+1310,I,Hydrophobic_Hub,1,state2_biased,,state2_biased,,state1_biased,
+1312,L,Hydrophobic_Hub,1,,state1_biased,state2_biased,,,
+1315,L,Hydrophobic_Hub,1,state2_biased,,,,,state1_biased
+1324,F,Hydrophobic_Hub,1,,state2_biased,state2_biased,,state1_biased,state1_biased
+1326,Y,Hydrophobic_Hub,1,state1_biased,state2_biased,,state1_biased,,
