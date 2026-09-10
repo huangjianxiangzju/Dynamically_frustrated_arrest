@@ -1,5 +1,5 @@
 """
-Figure S9: Integrated CB + VESM + MD Percentile Rank
+Supplementary Figure 14: Integrated CB + VESM + MD Percentile Rank
 ------------------------------------------------------
 Panel A: Scatter pct_cb vs pct_vesm, dot size = md_n, colored by evidence_count.
 Panel B: Top 30 residues by combined_score, stacked bar of percentile contributions.
@@ -8,6 +8,20 @@ Style: Helvetica, no panel titles, dpi=600, legends below panels.
 """
 
 import os
+from pathlib import Path
+from PIL import Image
+import argparse
+ROOT = Path(__file__).resolve().parents[3]
+parser = argparse.ArgumentParser(description="Reproduce Supplementary Figure 14 and integrated residue ranks.")
+parser.add_argument("--data", type=Path, default=ROOT / "data/AI-validation-[CB,VESM]")
+parser.add_argument("--output", type=Path, default=ROOT / "figures/submission/Supplementary_figures")
+parser.add_argument("--table-output", type=Path, default=None)
+args = parser.parse_args()
+DATA = args.data.resolve()
+OUT = args.output.resolve()
+TABLE_OUT = args.table_output.resolve() if args.table_output else DATA
+OUT.mkdir(exist_ok=True, parents=True)
+TABLE_OUT.mkdir(exist_ok=True, parents=True)
 import pandas as pd
 import numpy as np
 import matplotlib
@@ -52,34 +66,37 @@ def get_domain(pos):
 # 1. CB
 # ==========================================
 dfs_all = []   # all 1368 positions for proper percentile ranking
-dfs_md  = []   # MD-annotated positions for metadata (MD_Roles, Hub_Overlap_Count)
 for pair in STEPWISE_PAIRS:
     path = f"CB_results_{pair}_proteinmpnn/position_summary.csv"
-    if not os.path.exists(path):
-        print(f"  Warning: {path} not found, skipping.")
-        continue
-    tmp = pd.read_csv(path)
+    if not (DATA / path).exists():
+        raise FileNotFoundError(DATA / path)
+    tmp = pd.read_csv(DATA / path)
     tmp['driving_force'] = -tmp['CB_bias_zscore']
     dfs_all.append(tmp[['position', 'wt', 'driving_force']])
-    dfs_md.append(tmp[['position', 'MD_Roles', 'Hub_Overlap_Count', 'driving_force']])
 
 # All positions — used for CB percentile rank so non-MD dots are not pinned to 0
 cb_all = (pd.concat(dfs_all)
           .groupby(['position', 'wt'], as_index=False)['driving_force'].mean()
           .rename(columns={'driving_force': 'cb_force'}))
 
-# MD metadata only
-cb_md = (pd.concat(dfs_md)
-         .groupby(['position', 'MD_Roles', 'Hub_Overlap_Count'], as_index=False)['driving_force'].mean()
-         [['position', 'MD_Roles', 'Hub_Overlap_Count']])
-
-cb_agg = pd.merge(cb_all, cb_md, on='position', how='left')
-print(f"CB: {len(cb_agg)} positions ({(cb_agg['Hub_Overlap_Count'] > 0).sum()} MD-annotated)")
+# Use the verified Figure 7 one-row-per-residue annotation method.
+md_meta = pd.read_csv(DATA / MD_FILE)
+categories = ['Switch', 'GCCM', 'SB_hub', 'Hydro_hub', 'BC']
+assert md_meta['Residue'].is_unique and len(md_meta) == 311
+assert md_meta[categories].eq('Y').sum().tolist() == [84, 54, 46, 90, 89]
+md_meta['Hub_Overlap_Count'] = md_meta[categories].eq('Y').sum(axis=1)
+assert (md_meta['Hub_Overlap_Count'] >= 2).sum() == 52
+md_meta['MD_Roles'] = md_meta.apply(
+    lambda r: ' | '.join(c for c in categories if r[c] == 'Y'), axis=1)
+cb_md = md_meta.rename(columns={'Residue': 'position'})[
+    ['position', 'MD_Roles', 'Hub_Overlap_Count']]
+cb_agg = pd.merge(cb_all, cb_md, on='position', how='left', validate='one_to_one')
+assert cb_agg['position'].is_unique and len(cb_agg) == 1368
 
 # ==========================================
 # 2. VESM
 # ==========================================
-vesm = pd.read_csv(VESM_FILE)
+vesm = pd.read_csv(DATA / VESM_FILE)
 vesm['vesm_constraint'] = -vesm['mean_LLR']
 vesm_sub = vesm[['position', 'vesm_constraint']].copy()
 print(f"VESM: {len(vesm_sub)} positions")
@@ -87,9 +104,12 @@ print(f"VESM: {len(vesm_sub)} positions")
 # ==========================================
 # 3. MD
 # ==========================================
-md = pd.read_csv(MD_FILE)
+md = pd.read_csv(DATA / MD_FILE)
 md = md.rename(columns={'Residue': 'position', 'n': 'md_n'})
 md_sub = md[['position', 'md_n']].copy()
+assert md_sub['position'].is_unique
+expected = md_meta.set_index('Residue')['Hub_Overlap_Count'].sort_index()
+assert np.array_equal(md_sub.set_index('position')['md_n'].sort_index().to_numpy(), expected.to_numpy())
 print(f"MD superset: {len(md_sub)} residues")
 
 # ==========================================
@@ -99,6 +119,8 @@ merged = pd.merge(cb_agg, vesm_sub, on='position', how='outer')
 merged = pd.merge(merged, md_sub,   on='position', how='outer')
 merged['md_n'] = merged['md_n'].fillna(0).astype(int)
 merged['wt']   = merged['wt'].fillna('?')
+assert merged['position'].is_unique and len(merged) == 1368
+assert merged[['cb_force', 'vesm_constraint']].notna().all().all()
 merged['domain'] = merged['position'].apply(get_domain)
 print(f"Merged: {len(merged)} total positions")
 
@@ -132,7 +154,12 @@ merged_out = (merged[out_cols]
               .sort_values('combined_score', ascending=False)
               .round({'cb_force': 4, 'vesm_constraint': 3,
                       'pct_cb': 1, 'pct_vesm': 1, 'pct_md': 1, 'combined_score': 2}))
-merged_out.to_csv("integrated_rank_table.csv", index=False)
+merged_out.to_csv(TABLE_OUT / "integrated_rank_table.csv", index=False)
+merged[out_cols].sort_values('combined_score', ascending=False).to_csv(
+    TABLE_OUT / "integrated_rank_table_full_precision.csv", index=False)
+merged[['position', 'wt', 'domain', 'evidence_count']].query('evidence_count == 3').sort_values('position').to_csv(
+    TABLE_OUT / "three_method_consensus_residues.csv", index=False)
+assert merged['evidence_count'].value_counts().sort_index().tolist() == [267, 606, 412, 83]
 print("\nSaved: integrated_rank_table.csv")
 
 print("\n=== Evidence breakdown ===")
@@ -156,7 +183,8 @@ ev_labels = {
 }
 md_size_map = {0: 8, 1: 18, 2: 35, 3: 55, 4: 75, 5: 95}
 
-fig = plt.figure(figsize=(18, 7))
+np.random.seed(0)
+fig = plt.figure(figsize=(18, 8))
 gs  = fig.add_gridspec(1, 2, width_ratios=[1.3, 1], wspace=0.32)
 ax_scatter = fig.add_subplot(gs[0])
 ax_bar     = fig.add_subplot(gs[1])
@@ -181,7 +209,7 @@ for _, row in top15.iterrows():
                         f"{row['wt']}{int(row['position'])}",
                         fontsize=8, fontweight='bold', color='#5A0000')
     texts.append(t)
-adjust_text(texts, ax=ax_scatter,
+adjust_text(texts, ax=ax_scatter, iter_lim=500,
             arrowprops=dict(arrowstyle='-', color='#888888', lw=0.5),
             expand_points=(2.5, 3.5))
 
@@ -197,7 +225,7 @@ ax_scatter.axhline(50, color='#777777', ls='--', lw=0.8, alpha=0.6)
 #                fontsize=13, color='#5A3E00', style='italic', zorder=10)
 
 ax_scatter.set_xlabel('CB percentile rank', fontsize=20)
-ax_scatter.set_ylabel('VESM percentile rank', fontsize=20)
+ax_scatter.set_ylabel('VESM substitution-intolerance percentile rank', fontsize=20)
 ax_scatter.set_xlim(0, 101)
 ax_scatter.set_ylim(0, 101)
 ax_scatter.tick_params(labelsize=18)
@@ -232,7 +260,16 @@ ax_bar.spines['right'].set_visible(False)
 ax_bar.legend(loc='upper center', bbox_to_anchor=(0.5, -0.18),
               fontsize=11, frameon=False, ncol=3)
 
-plt.savefig('Integrated_Rank.png', dpi=600, bbox_inches='tight')
-plt.savefig('Integrated_Rank.pdf', bbox_inches='tight')
-print("\nSaved: Integrated_Rank.png/.pdf")
+fig.text(.035, .91, 'A', fontsize=22)
+fig.text(.565, .91, 'B', fontsize=22)
+# Render vector artwork directly at sufficient pixel density; no raster upsampling.
+fig.savefig(OUT / 'Supplementary_Figure_14.png',
+            dpi=600, bbox_inches='tight', facecolor='white')
+fig.savefig(OUT / 'Supplementary_Figure_14.pdf',
+            bbox_inches='tight', facecolor='white')
+with Image.open(OUT / 'Supplementary_Figure_14.png') as im:
+    im.convert('RGB').save(OUT / 'Supplementary_Figure_14.tif',
+                          dpi=(600, 600), compression='tiff_lzw')
+fig.savefig(OUT / 'preview.png', dpi=100, bbox_inches='tight', facecolor='white')
+print("\nSaved: Supplementary_Figure_14.png/.pdf/.tif")
 plt.close()

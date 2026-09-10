@@ -1,10 +1,20 @@
 # A dynamically frustrated allosteric checkpoint consistent with conformational proofreading in CRISPR-Cas9
 
-> **Status:** Manuscript under review at *Nucleic Acids Research*  
+> **Status:** Accepted for publication in *Nucleic Acids Research*<br>
 > **Authors:** Jianxiang Huang and Shaoyong Lu  
 > **Correspondence:** Jianxiang Huang (jxhuang@sjtu.edu.cn)
 
 ## Overview
+
+**Archived publication release:** [Zenodo DOI 10.5281/zenodo.22689874](https://doi.org/10.5281/zenodo.22689874). Use this version-specific DOI when citing the data and code associated with the paper. This GitHub tree is synchronized with that release; later GitHub changes do not alter the archived version.
+
+**Current figures:** use [`figures/submission/`](figures/submission/) and its figure index for manuscript numbering. Other figure directories retain descriptive analysis outputs and historical naming. In particular, the corrected integrated-ranking analysis is **Supplementary Figure S14**, while **S13 is the elbow analysis**.
+
+### Revision aligned with the current supplementary numbering (10 September 2026)
+
+The current manuscript-numbered artwork is in `figures/submission/`, with a complete figure-to-file index and old-to-new supplementary numbering map. Historical analysis folders remain available under their descriptive names.
+
+Supplementary Figure S14 (previously S13) uses corrected one-row-per-position integration of CB, VESM and MD evidence. The integrated table contains 1,368 unique positions; 83 positions exceed the median in all three metrics. The evidence-count totals for zero, one, two and three metrics above the median are 267, 606, 412 and 83. Raw simulation outputs and input CB/VESM scores are unchanged. See `CHANGELOG.md` and `data/AI-validation-[CB,VESM]/INTEGRATED_RANK_README.md` for the correction and numerical definitions.
 
 This repository contains the processed data, raw analysis outputs, analysis scripts, and generated figures for the manuscript **"A dynamically frustrated allosteric checkpoint consistent with conformational proofreading in CRISPR-Cas9."**
 
@@ -53,7 +63,7 @@ The revision distinguishes five independently filtered MD evidence categories fr
 │           ├── VESM-CB/               # PDB cleaning, VESM scoring, CB scoring pipeline
 │           ├── plot_CB_state_bias_2rows.py
 │           └── plot_integrated_rank.py
-└── figures/                           # Publication-quality output figures (PNG, 600 dpi)
+└── figures/                           # Figure outputs; see per-file resolution information
     ├── Figure3/
     ├── Figure4/
     ├── Figure5/
@@ -103,7 +113,7 @@ All analysis code is in `scripts/`. Each figure subdirectory contains a `README.
 
 **To reproduce figures:**
 
-> All paths below are relative to the repository root. Scripts use bare filenames and must be run from the directory containing their input data — see each subfolder `README.md` for details.
+> All paths below are relative to the repository root. Most historical scripts use bare filenames and must be run from the directory containing their input data. The corrected `plot_integrated_rank.py` instead resolves its defaults from its own repository location and can be run from any working directory; it also accepts `--data`, `--output` and `--table-output`.
 
 ```bash
 # Figure 3 – RMSF domain dynamics
@@ -159,7 +169,7 @@ See each subfolder `README.md` for detailed input/output descriptions.
 
 If you use this data or code, please cite:
 
-> Huang, J. and Lu, S. *A dynamically frustrated allosteric checkpoint consistent with conformational proofreading in CRISPR-Cas9*. Dataset and analysis code. Zenodo. https://doi.org/10.5281/zenodo.21065807
+> Huang, J. and Lu, S. *A dynamically frustrated allosteric checkpoint consistent with conformational proofreading in CRISPR-Cas9*. Dataset and analysis code. Zenodo. https://doi.org/10.5281/zenodo.22689874
 
 ---
 

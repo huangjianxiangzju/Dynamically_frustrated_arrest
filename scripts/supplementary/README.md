@@ -59,16 +59,16 @@ Generates a two-row supplementary panel showing the directional bias of ProteinM
 - `data/AI-validation-[CB,VESM]/CB_directionality/cb_directionality_enrichment.csv`
 
 ### `plot_integrated_rank.py`
-Generates the integrated CB + VESM + MD percentile rank figure (Figure S — integrated validation):
+Generates Supplementary Figure S14 (previously S13), the integrated CB + VESM + MD percentile rank figure:
 - Panel A: Scatter of CB percentile vs VESM substitution-intolerance percentile, dot size = number of supporting MD evidence categories, coloured by evidence count.
 - Panel B: Top 30 residues by combined score, stacked bar of percentile contributions.
 
 **Inputs:**
 - `data/AI-validation-[CB,VESM]/CB_results_*_proteinmpnn/position_summary.csv`
 - `data/AI-validation-[CB,VESM]/SpCas9_VESM3B_full_position_summary.csv`
-- `data/Interaction_Network/SB_All_Dynamic_Hubs_Ranked.csv`
+- `data/AI-validation-[CB,VESM]/full_superset.csv`
 
-**Output:** `Integrated_Rank.png/.pdf` in the working directory.
+**Outputs:** `Supplementary_Figure_14.png/.pdf/.tif` in `figures/submission/Supplementary_figures/`; display-rounded and full-precision integrated tables and the 83-residue consensus list in `data/AI-validation-[CB,VESM]/`. One-to-one residue merges prevent historical annotation synonyms from duplicating positions. Run `validate_integrated_rank.py` to check the outputs independently.
 
 ### `build_md_key_residue_table.py`
 Applies the revision's cross-method filter to `full_superset.csv`. The five category sizes are 84, 54, 46, 90, and 89; their union contains 311 residues. Requiring at least two supporting categories produces `MD_key_residues_multi_evidence.csv` with 52 residues.
@@ -83,7 +83,7 @@ python SpCas9_VESM_score.py --mode all
 python run_CB_SpCas9.py
 ```
 
-> **Note:** `plot_CB_state_bias_2rows.py` and `plot_integrated_rank.py` use bare relative paths (`CB_results_*_proteinmpnn/`, `SpCas9_VESM3B_full_position_summary.csv`) and must be run from `data/AI-validation-[CB,VESM]/`:
+> **Note:** `plot_CB_state_bias_2rows.py` still uses bare relative paths and must be run from `data/AI-validation-[CB,VESM]/`. The integrated-ranking script works from any directory; the commands below remain valid:
 
 ```bash
 cd data/AI-validation-[CB,VESM]
@@ -92,9 +92,9 @@ python ../../scripts/supplementary/AI-dms-validation/plot_CB_state_bias_2rows.py
 python ../../scripts/supplementary/AI-dms-validation/plot_integrated_rank.py
 ```
 
-> **`plot_integrated_rank.py`** also requires the full-superset MD annotation file at `full_superset.csv` (bare filename, resolved from `data/AI-validation-[CB,VESM]/` working directory).
+> **`plot_integrated_rank.py`** resolves its input defaults relative to the repository, with optional `--data`, `--output` and `--table-output` arguments. See the integrated-rank README beside its input tables for definitions and reproduction instructions.
 
-> **Figure 10** — three-way CB × VESM × DMS validation — is produced by a standalone script at `data/AI-validation-[CB,VESM]/cb_vesm_dms_triple.py`. Run it from `data/AI-validation-[CB,VESM]/CB_VESM_discordance/` after `scripts/Figure7/plot_CB_VESM_discordance.py` has generated `cb_vesm_quadrant_table.csv`:
+> **DMS validation** is supported by the standalone script at `data/AI-validation-[CB,VESM]/cb_vesm_dms_triple.py`. Run it from `data/AI-validation-[CB,VESM]/CB_VESM_discordance/` after `scripts/Figure7/plot_CB_VESM_discordance.py` has generated `cb_vesm_quadrant_table.csv`. Current manuscript-numbered artwork is indexed in `figures/submission/FIGURE_INDEX.csv`:
 
 ```bash
 cd data/AI-validation-[CB,VESM]/CB_VESM_discordance

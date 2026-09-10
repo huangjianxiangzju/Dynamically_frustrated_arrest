@@ -1,5 +1,16 @@
 # Changelog
 
+## Version 2.1 — 2026-09-10
+
+- Corrected the integrated CB–VESM–MD ranking script to merge one MD annotation record per residue. Historical role-label synonyms could produce multiple records at a position; metadata now derive from the five category flags in `full_superset.csv`, with one-to-one merge checks.
+- Added the corrected 1,368-position integrated ranking table, its full-precision companion and an explicit list of 83 three-method consensus residues. Percentile ranks use average ties over all 1,368 positions; the combined score remains the mean of the three percentiles. Evidence counts are calculated before display rounding.
+- Preserved the MD category sizes (84, 54, 46, 90 and 89), the 311-residue union and the 52 multi-category key residues. The 90 hydrophobic-category residues are distinct from the 83 three-method consensus residues; that category count is not corrected to 83.
+- Added the approved corrected integrated-ranking figure as Supplementary Figure S14, with PNG, TIFF and vector PDF versions. Added all eight main and 18 supplementary manuscript-numbered PNGs, a figure index, captions and the supplementary figure/note numbering map.
+- Made the integrated-ranking script independent of the current working directory and added an independent numerical validation script.
+- Aligned documentation with the supplementary renumbering following placement of Materials and Methods before Results. Main figure and supplementary table numbers are unchanged.
+
+The raw simulation outputs, trajectories and input CB/VESM scores are unchanged. This release supersedes the integrated-ranking script in Zenodo record 22278694; it does not change the earlier Figure 7 correction or rerun the MD or neural scoring calculations.
+
 ## Version 2.0 — 2026-09-02
 
 This release aligns the deposited data, scripts, figures, and documentation with the revised manuscript under review at *Nucleic Acids Research*.
